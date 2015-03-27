@@ -83,9 +83,9 @@ abstract class BaseCommandExecutor implements CommandExecutor
 
         $status = 0;
         $descriptorSpec = array(
-            0 => array("pipe", "r"),  // stdin
-            1 => array("pipe", "w"),  // stdout
-            2 => array("pipe", "w"),  // stderr
+            0 => array("pty"),  // stdin
+            1 => array("pty"),  // stdout
+            2 => array("pty"),  // stderr
         );
 
         $pipes = array();
@@ -95,21 +95,40 @@ abstract class BaseCommandExecutor implements CommandExecutor
         if (is_resource($process)) {
             fclose($pipes[0]);
 
-            $this->lastOutput = stream_get_contents($pipes[1]);
+            $shouldOutput = ($this->logExecOutput && ($this->verbose || $status != 0));
+
+            if ($shouldOutput) {
+                $buffer = $stream = '';
+
+                while (true) {
+                    // Have we hit a blank line?
+                    if ($stream != '' && $buffer) {
+                        // Stream a log of the output
+                        $this->logger->log($buffer);
+
+                        // Store it for usage
+                        $this->lastOutput[] = $buffer;
+                    }
+
+                    // Retrieve the next line
+                    if (($stream = fgets($pipes[1])) === false) {
+                        break;
+                    }
+
+                    // Trim any newlines
+                    $stream = trim($stream);
+                }
+            }
+            else {
+                $this->lastOutput = stream_get_contents($pipes[1]);
+            }
+
             $this->lastError = stream_get_contents($pipes[2]);
 
             fclose($pipes[1]);
             fclose($pipes[2]);
 
             $status = proc_close($process);
-        }
-
-        $this->lastOutput = array_filter(explode(PHP_EOL, $this->lastOutput));
-
-        $shouldOutput = ($this->logExecOutput && ($this->verbose || $status != 0));
-
-        if ($shouldOutput && !empty($this->lastOutput)) {
-            $this->logger->log($this->lastOutput);
         }
 
         if (!empty($this->lastError)) {
