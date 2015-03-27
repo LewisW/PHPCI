@@ -192,9 +192,11 @@ class Builder implements LoggerAwareInterface
             // Set up the build:
             $this->setupBuild();
 
-            // Run the core plugin stages:
-            foreach (array('setup', 'test') as $stage) {
-                $success &= $this->pluginExecutor->executePlugins($this->config, $stage);
+            $success = $this->pluginExecutor->executePlugins($this->config, 'setup');
+
+            // Run the core plugin stages only if setup run successfully:
+            if ($success) {
+                $success = $this->pluginExecutor->executePlugins($this->config, 'test');
             }
 
             // Set the status so this can be used by complete, success and failure
