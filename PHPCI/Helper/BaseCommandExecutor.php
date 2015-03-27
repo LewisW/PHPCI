@@ -95,6 +95,8 @@ abstract class BaseCommandExecutor implements CommandExecutor
 
             if ($this->verbose) {
                 while (($stream = fgets($pipes[1])) !== false) {
+                    $stream = trim($stream) . PHP_EOL;
+
                     // Stream a log of the output
                     $this->logger->log($stream);
 
