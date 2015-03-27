@@ -96,27 +96,11 @@ abstract class BaseCommandExecutor implements CommandExecutor
             fclose($pipes[0]);
 
             if ($this->verbose) {
-                $buffer = $stream = '';
+                while (($stream = fgets($pipes[1])) !== false) {
+                    // Stream a log of the output
+                    $this->logger->log($stream);
 
-                while (true) {
-                    // Have we hit a blank line?
-                    if (trim($stream) == '' && $buffer) {
-                        // Stream a log of the output
-                        $this->logger->log($buffer);
-
-                        // Store it for usage
-                        $this->lastOutput[] = $buffer;
-
-                        // Reset the buffer
-                        $buffer = '';
-                    }
-
-                    // Retrieve the next line
-                    if (($stream = fgets($pipes[1])) === false) {
-                        break;
-                    }
-
-                    $buffer .= $stream;
+                    $this->lastOutput .= $stream;
                 }
             }
             else {
