@@ -95,9 +95,7 @@ abstract class BaseCommandExecutor implements CommandExecutor
         if (is_resource($process)) {
             fclose($pipes[0]);
 
-            $shouldOutput = ($this->logExecOutput && ($this->verbose || $status != 0));
-
-            if ($shouldOutput) {
+            if ($this->verbose) {
                 $buffer = $stream = '';
 
                 while (true) {
