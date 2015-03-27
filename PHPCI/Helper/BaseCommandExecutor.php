@@ -100,12 +100,15 @@ abstract class BaseCommandExecutor implements CommandExecutor
 
                 while (true) {
                     // Have we hit a blank line?
-                    if ($stream != '' && $buffer) {
+                    if ($stream == '' && $buffer) {
                         // Stream a log of the output
                         $this->logger->log($buffer);
 
                         // Store it for usage
                         $this->lastOutput[] = $buffer;
+
+                        // Reset the buffer
+                        $buffer = '';
                     }
 
                     // Retrieve the next line
@@ -114,7 +117,7 @@ abstract class BaseCommandExecutor implements CommandExecutor
                     }
 
                     // Trim any newlines
-                    $stream = trim($stream);
+                    $buffer .= $stream = trim($stream);
                 }
             }
             else {
