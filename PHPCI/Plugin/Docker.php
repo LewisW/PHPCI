@@ -58,7 +58,7 @@ class Docker implements PHPCI\Plugin
         $build = $this->build;
         $path = $this->phpci->buildPath;
 
-        $commit = strtolower($build->getCommitId());
+        $commit = strtolower($build->getId());
 
         $dockerLocation = $this->phpci->findBinary('docker');
 
@@ -72,7 +72,7 @@ class Docker implements PHPCI\Plugin
             $this->phpci->executeCommand('find %s | fgrep -v ./.git/ | xargs touch -t 200001010000.00', $path);
         }
 
-        $cmd = $dockerLocation . ' build --rm -t %s %s';
+        $cmd = $dockerLocation . ' build --rm -t build-%s %s';
 
         $this->phpci->log('Running docker build');
         $this->phpci->log(sprintf($cmd, $commit, $path));
