@@ -62,7 +62,7 @@ abstract class BaseCommandExecutor implements CommandExecutor
         $this->logger = $logger;
         $this->quiet = $quiet;
         $this->verbose = $verbose;
-        $this->lastOutput = array();
+        $this->lastOutput = null;
         $this->rootDir = $rootDir;
     }
 
@@ -73,8 +73,6 @@ abstract class BaseCommandExecutor implements CommandExecutor
      */
     public function executeCommand($args = array())
     {
-        $this->lastOutput = array();
-
         $command = call_user_func_array('sprintf', $args);
 
         if ($this->quiet) {
@@ -133,7 +131,7 @@ abstract class BaseCommandExecutor implements CommandExecutor
      */
     public function getLastOutput()
     {
-        return implode(PHP_EOL, $this->lastOutput);
+        return $this->lastOutput;
     }
 
     /**
