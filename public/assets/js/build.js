@@ -69,6 +69,16 @@ var Build = Class.extend({
         localStorage.setItem('phpci-plugin-order', JSON.stringify(renderOrder));
     },
 
+    registerResizeListeners: function () {
+
+        $('.ui-plugin-resize').click(function(event) {
+            event.preventDefault();
+            $(this).closest('.ui-plugin').toggleClass('col-full');
+        });
+
+//        localStorage.setItem('phpci-plugin-size', JSON.stringify(renderOrder));
+    },
+
     renderPlugins: function() {
         var self = this;
         var rendered = [];
@@ -113,7 +123,7 @@ var Build = Class.extend({
         content.addClass('box box-default');
 
         if (plugin.title) {
-            content.prepend('<div class="box-header"><h3 class="box-title">'+plugin.title+'</h3></div>');
+            content.prepend('<div class="box-header"><h3 class="box-title">'+plugin.title+'</h3> <a href="" class="pull-right ui-plugin-resize"><i class="fa fa-expand"></i></a></div>');
         }
 
         container.append(content);

@@ -75,3 +75,7 @@ ul.pagination {
         color:            #333;
         background-color: #fff;
     }
+
+.col-full {
+    width: 100% !important;
+}
