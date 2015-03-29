@@ -119,7 +119,7 @@ class PhpUnit implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
         if (isset($options['config'])) {
             $this->xmlConfigFile = $options['config'];
         }
-        var_dump($this->xmlConfigFile);
+
         if (isset($options['run_from'])) {
             $this->runFrom = $options['run_from'];
         }
@@ -157,7 +157,6 @@ class PhpUnit implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
 
         $this->phpci->logExecOutput(false);
 
-        var_dump($this->xmlConfigFile);
         // Run any config files first. This can be either a single value or an array.
         if ($this->xmlConfigFile !== null) {
             $success &= $this->runConfigFile($this->xmlConfigFile);
@@ -204,7 +203,6 @@ class PhpUnit implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
                 chdir($this->phpci->buildPath.'/'.$this->runFrom);
             }
 
-
             $phpunit = $this->executable;
 
             if (!$phpunit) {
@@ -212,10 +210,9 @@ class PhpUnit implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
                 return false;
             }
 
-
             $cmd = $phpunit . ' --tap %s -c "%s" ' . $this->coverage . $this->path;
-            echo(sprintf($cmd, $this->args, $this->phpci->buildPath . $configPath));
-            $success = $this->phpci->executeCommand($cmd, $this->args, $this->phpci->buildPath . $configPath);
+            echo(sprintf($cmd, $this->args, $configPath));
+            $success = $this->phpci->executeCommand($cmd, $this->args, $configPath);
 
             if ($this->runFrom) {
                 chdir($curdir);
