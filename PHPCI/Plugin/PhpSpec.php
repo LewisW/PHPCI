@@ -72,7 +72,7 @@ class PhpSpec implements PHPCI\Plugin
 
         $success = $this->phpci->executeCommand($phpspec . ' --format=junit --no-code-generation run');
         $output = $this->phpci->getLastOutput();
-        var_dump($output);
+
         chdir($curdir);
 
         /*
