@@ -126,6 +126,8 @@ var Build = Class.extend({
             content.prepend('<div class="box-header"><h3 class="box-title">'+plugin.title+'</h3> <a href="" class="pull-right ui-plugin-resize"><i class="fa fa-expand"></i></a></div>');
         }
 
+        this.registerResizeListeners();
+
         container.append(content);
 
         $('#plugins').append(container);
