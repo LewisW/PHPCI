@@ -213,7 +213,7 @@ class PhpUnit implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
 
 
             $cmd = $phpunit . ' --tap %s -c "%s" ' . $this->coverage . $this->path;
-            $this->phpci->log(sprintf($cmd, $this->args, $this->phpci->buildPath . $configPath));
+            echo(sprintf($cmd, $this->args, $this->phpci->buildPath . $configPath));
             $success = $this->phpci->executeCommand($cmd, $this->args, $this->phpci->buildPath . $configPath);
 
             if ($this->runFrom) {
