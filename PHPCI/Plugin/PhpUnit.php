@@ -119,7 +119,7 @@ class PhpUnit implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
         if (isset($options['config'])) {
             $this->xmlConfigFile = $options['config'];
         }
-
+        var_dump($this->xmlConfigFile);
         if (isset($options['run_from'])) {
             $this->runFrom = $options['run_from'];
         }
@@ -157,6 +157,7 @@ class PhpUnit implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
 
         $this->phpci->logExecOutput(false);
 
+        var_dump($this->xmlConfigFile);
         // Run any config files first. This can be either a single value or an array.
         if ($this->xmlConfigFile !== null) {
             $success &= $this->runConfigFile($this->xmlConfigFile);
