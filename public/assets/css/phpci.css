@@ -79,3 +79,6 @@ ul.pagination {
 .col-full {
     width: 100% !important;
 }
+.ui-plugin-resize {
+    margin: 5px 7px;
+}
