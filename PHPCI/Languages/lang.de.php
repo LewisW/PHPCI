@@ -325,7 +325,8 @@ generiert. Um es zu verwenden, fügen Sie einfach den folgenden Public Key im Ab
     'found_n_projects' => '%d Projekte gefunden',
     'last_commit_is' => 'Der letzte Commit zu GitHub für %s ist %s',
     'adding_new_build' => 'Letzter Commit unterscheidet sich von der Datenbank, füge neuen Build hinzu.',
-    'finished_processing_builds' => 'Bearbeiten der Builds abgeschlossen.',
+    'finished_processing_builds' => 'Bearbeiten der Builds abgeschlossen.', // TODO: Translate me
+    'build_cancelled' => 'Build cancelled',
 
     // Create Admin
     'create_admin_user' => 'Administratorenbenutzer erstellen',

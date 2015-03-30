@@ -328,7 +328,7 @@ Services</a> του Bitbucket αποθετηρίου σας.',
     'found_n_projects' => 'Βρέθηκαν %d έργα',
     'last_commit_is' => 'H τελευταία συνεισφορά στο GitHub για %s είναι %s',
     'adding_new_build' => 'Τελευταία συνεισφορά είναι διαφορετική από τη βάση δεδομένων, γίνεται προσθήκη νέας κατασκευής.',
-    'finished_processing_builds' => 'Ολοκληρώθηκε η επεξεργασία κατασκευής.',
+    'finished_processing_builds' => 'Ολοκληρώθηκε η επεξεργασία κατασκευής.', // TODO: Translate me
 
     // Create Admin
     'create_admin_user' => 'Δημιουργήστε ένα χρήστη διαχειριστή',
