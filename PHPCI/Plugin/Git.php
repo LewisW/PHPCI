@@ -89,7 +89,7 @@ class Git implements \PHPCI\Plugin
             case 'push':
                 return $this->runPushAction($options);
 
-            case 'plugin':
+            case 'run':
                 return $this->runPluginAction($options);
         }
 
