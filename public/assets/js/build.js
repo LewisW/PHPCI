@@ -5,6 +5,7 @@ var Build = Class.extend({
     buildData: {},
     queries: {},
     updateInterval: null,
+    pluginSizes: {},
 
     init: function(build) {
         var self = this;
@@ -70,13 +71,18 @@ var Build = Class.extend({
     },
 
     registerResizeListeners: function () {
+        var pluginSizes = this.pluginSizes;
 
         $('.ui-plugin-resize').click(function(event) {
             event.preventDefault();
-            $(this).closest('.ui-plugin').toggleClass('col-full');
+
+            var $this = $(this), top = $this.closest('.ui-plugin');
+
+            top.toggleClass('col-full');
+            pluginSizes[top.children(':first').attribute('id')] = $this.hasClass('col-full');
         });
 
-//        localStorage.setItem('phpci-plugin-size', JSON.stringify(renderOrder));
+        localStorage.setItem('phpci-plugin-size', JSON.stringify(pluginSizes));
     },
 
     renderPlugins: function() {
