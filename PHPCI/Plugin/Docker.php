@@ -67,19 +67,17 @@ class Docker implements PHPCI\Plugin
             return false;
         }
 
-        $oauth = $this->phpci->executeCommand('%s config github-oauth.github.com', $this->phpci->findBinary(array('composer', 'composer.phar')));
-
         if ($this->resetModified) {
             $this->phpci->log('Reseting modified time');
             $this->phpci->executeCommand('find %s | fgrep -v ./.git/ | xargs touch -t 200001010000.00', $path);
         }
 
-        $cmd = $dockerLocation . ' build --pull --env GITHUB_OAUTH_TOKEN=%s --rm -t build-%s %s';
+        $cmd = $dockerLocation . ' build --pull --rm -t build-%s %s';
 
         $this->phpci->log('Running docker build');
 
-        $this->phpci->log(sprintf($cmd, $oauth, $commit, $path));
+        $this->phpci->log(sprintf($cmd, $commit, $path));
 
-        return $this->phpci->executeCommand($cmd, $oauth, $commit, $path);
+        return $this->phpci->executeCommand($cmd, $commit, $path);
     }
 }
