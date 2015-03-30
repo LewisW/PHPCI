@@ -84,9 +84,11 @@ class RunCommand extends SignaledCommand
 
             $build->setStatus(Build::STATUS_FAILED);
             $build->setFinished(new \DateTime());
-            $build->setLog($build->getLog() . PHP_EOL . PHP_EOL . Lang::get('finished_processing_builds'));
+            $build->setLog($build->getLog() . PHP_EOL . PHP_EOL . Lang::get('build_cancelled'));
             Factory::getStore('Build')->save($build);
         }
+
+        exit;
     }
 
     /**
@@ -139,6 +141,7 @@ class RunCommand extends SignaledCommand
                 $builder = new Builder($build, $this->logger);
                 $builder->execute();
 
+                $this->currentBuild = null;
                 // After execution we no longer want to record the information
                 // back to this specific build so the handler should be removed.
                 $this->logger->popHandler($buildDbLog);
