@@ -16,6 +16,7 @@ use PHPCI\Helper\Lang;
 use PHPCI\Logging\BuildDBLogHandler;
 use PHPCI\Logging\LoggedBuildContextTidier;
 use PHPCI\Logging\OutputLogHandler;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use b8\Store\Factory;
@@ -29,7 +30,7 @@ use PHPCI\Model\Build;
 * @package      PHPCI
 * @subpackage   Console
 */
-class RunCommand extends SignaledCommand
+class RunCommand extends Command
 {
     /**
      * @var OutputInterface
@@ -64,10 +65,6 @@ class RunCommand extends SignaledCommand
     {
         parent::__construct($name);
         $this->logger = $logger;
-
-        foreach ($this->getStopSignals() as $signal) {
-            $this->addSignalCallback($signal, array($this, 'finish'));
-        }
     }
 
     protected function configure()
@@ -79,28 +76,10 @@ class RunCommand extends SignaledCommand
             ->setDescription(Lang::get('run_all_pending'));
     }
 
-    protected function finish()
-    {
-        $this->cleanUp();
-        exit;
-    }
-
-    protected function cleanUp()
-    {
-        if ($this->currentBuild) {
-            $build = $this->currentBuild;
-
-            $build->setStatus(Build::STATUS_FAILED);
-            $build->setFinished(new \DateTime());
-            $build->setLog($build->getLog() . PHP_EOL . PHP_EOL . Lang::get('build_cancelled'));
-            Factory::getStore('Build')->save($build);
-        }
-    }
-
     /**
      * Pulls all pending builds from the database and runs them.
      */
-    protected function doExecute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->output = $output;
 
@@ -147,7 +126,6 @@ class RunCommand extends SignaledCommand
                 $builder = new Builder($build, $this->logger);
                 $builder->execute();
 
-                $this->currentBuild = null;
                 // After execution we no longer want to record the information
                 // back to this specific build so the handler should be removed.
                 $this->logger->popHandler($buildDbLog);
