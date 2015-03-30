@@ -99,7 +99,7 @@ class ProjectService
             switch ($project->getType()) {
                 case 'github':
                     $github = new Github();
-                    $github->createPublicKey(Lang::get('public_key_name'), $project->getSshPublicKey());
+                    $github->createPublicKey($project->getTitle() .' - '. Lang::get('public_key_name'), $project->getSshPublicKey());
                     break;
             }
 
