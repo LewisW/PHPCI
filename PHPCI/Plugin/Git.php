@@ -178,6 +178,7 @@ class Git implements \PHPCI\Plugin
     protected function runPluginAction($plugins)
     {
         $executor = $this->phpci->getPluginExecutor();
+        $result = true;
 
         foreach ($plugins as $plugin => $options) {
             $this->phpci->log(Lang::get('running_plugin', $plugin));
@@ -187,14 +188,14 @@ class Git implements \PHPCI\Plugin
                 // Execution was successful:
                 $this->phpci->logSuccess(Lang::get('plugin_success'));
 
-                return true;
+                $result = true;
             } else {
                 $this->phpci->logFailure(Lang::get('plugin_failed'));
 
-                return false;
+                $result = false;
             }
         }
 
-        return true;
+        return $result;
     }
 }
