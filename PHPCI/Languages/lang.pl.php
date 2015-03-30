@@ -94,6 +94,7 @@ PHPCI',
     'public_key_help' => 'Aby łatwiej zacząć, wygenerowaliśmy parę kluczy SSH, które możesz użyć
 do tego projektu. Żeby je użyć, wystarczy dodać następujący klucz publiczny do sekcji "wdrożyć klucze"
 od wybranego kodu źródłowego platformy hostingowej.',
+    'public_key_name' => 'PHPCI',
     'select_repository_type' => 'Wybierz typ repozytorium...',
     'github' => 'GitHub',
     'bitbucket' => 'Bitbucket',

@@ -94,6 +94,7 @@ PHPCI',
     'public_key_help' => 'Um Ihnen den Einstieg zu erleichtern, haben wir ein SSH-Key-Paar für dieses Projekt
 generiert. Um es zu verwenden, fügen Sie einfach den folgenden Public Key im Abschnitt
 "Deploy Keys" Ihrer bevorzugten Quellcodehostingplattform hinzu.',
+    'public_key_name' => 'PHPCI',
     'select_repository_type' => 'Wählen Sie den Typ des Repositories...',
     'github' => 'GitHub',
     'bitbucket' => 'Bitbucket',

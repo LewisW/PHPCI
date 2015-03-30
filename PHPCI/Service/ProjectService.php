@@ -9,6 +9,8 @@
 
 namespace PHPCI\Service;
 
+use PHPCI\Helper\Github;
+use PHPCI\Helper\Lang;
 use PHPCI\Model\Project;
 use PHPCI\Store\ProjectStore;
 
@@ -91,6 +93,17 @@ class ProjectService
 
         // Allow certain project types to set access information:
         $this->processAccessInformation($project);
+
+        // Check if the public key has changed and automatically add it
+        if (array_key_exists('ssh_public_key', $project->getModified())) {
+            switch ($project->getType()) {
+                case 'github':
+                    $github = new Github();
+                    $github->createPublicKey(Lang::get('public_key_name'), $project->getSshPublicKey());
+                    break;
+            }
+
+        }
 
         // Save and return the project:
         return $this->projectStore->save($project);

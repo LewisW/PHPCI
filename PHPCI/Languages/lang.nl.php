@@ -94,6 +94,7 @@ PHPCI',
     'public_key_help' => 'Om eenvoudiger te kunnen starten, hebben we een SSH sleutelpaar gegenereerd
 voor dit project. Om het te gebruiken, voeg onderstaande public key toe aan de "deploy keys" sectie
 van je gekozen source code hosting platform',
+    'public_key_name' => 'PHPCI',
     'select_repository_type' => 'Selecteer repository type...',
     'github' => 'GitHub',
     'bitbucket' => 'Bitbucket',

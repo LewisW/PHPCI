@@ -93,6 +93,7 @@ PHPCI',
     'project_details' => 'Projekt-detaljer',
     'public_key_help' => 'For at gøre det lettere at starte har vi genereret en SSH-nøgle som du kan bruge til dette projekt. For at bruge den behøver du blot tilføje den følgende public key til "deployment keys" sektionen
 i din foretrukne hosting-platform.',
+    'public_key_name' => 'PHPCI',
     'select_repository_type' => 'Vælg repository-type...',
     'github' => 'GitHub',
     'bitbucket' => 'Bitbucket',

@@ -93,6 +93,7 @@ PHPCI',
     'public_key_help' => 'Per rendere più facile la procedura, abbiamo generato una chiave SSH per te da
                           usare per questo progetto. Per usarla, aggiungi la chiave pubblica alle "deploy keys"
                           della piattaforma di gestione del codice che hai scelto.',
+    'public_key_name' => 'PHPCI',
     'select_repository_type' => 'Seleziona il tipo di repository...',
     'github' => 'GitHub',
     'bitbucket' => 'Bitbucket',

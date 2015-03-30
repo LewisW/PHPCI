@@ -103,6 +103,30 @@ class Github
         return $rtn;
     }
 
+    public function createPublicKey($title, $key)
+    {
+        $token = Config::getInstance()->get('phpci.github.token');
+
+        if (!$token) {
+            return null;
+        }
+
+        $url = '/user/keys';
+
+        $params = array(
+            'title' => $title,
+            'key' => $key
+        );
+
+        $http = new HttpClient('https://api.github.com');
+        $http->setHeaders(array(
+            'Content-Type: application/x-www-form-urlencoded',
+            'Authorization: Basic ' . base64_encode($token . ':x-oauth-basic'),
+        ));
+
+        $http->post($url, json_encode($params));
+    }
+
     /**
      * Create a comment on a specific file (and commit) in a Github Pull Request.
      * @param $repo
