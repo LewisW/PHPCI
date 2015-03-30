@@ -88,6 +88,9 @@ class Git implements \PHPCI\Plugin
 
             case 'push':
                 return $this->runPushAction($options);
+
+            case 'plugin':
+                return $this->runPluginAction($options);
         }
 
 
@@ -170,5 +173,28 @@ class Git implements \PHPCI\Plugin
         }
 
         return $this->phpci->executeCommand('git push %s %s', $remote, $branch);
+    }
+
+    protected function runPluginAction($plugins)
+    {
+        $executor = $this->phpci->getPluginExecutor();
+
+        foreach ($plugins as $plugin => $options) {
+            $this->phpci->log(Lang::get('running_plugin', $plugin));
+
+            // Try and execute it:
+            if ($executor->executePlugin($plugin, $options)) {
+                // Execution was successful:
+                $this->phpci->logSuccess(Lang::get('plugin_success'));
+
+                return true;
+            } else {
+                $this->phpci->logFailure(Lang::get('plugin_failed'));
+
+                return false;
+            }
+        }
+
+        return true;
     }
 }

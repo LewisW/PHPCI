@@ -404,4 +404,13 @@ class Builder implements LoggerAwareInterface
 
         return $pluginFactory;
     }
+
+    /**
+     * Gets Plugin executor
+     * @return Plugin\Util\Executor
+     */
+    public function getPluginExecutor()
+    {
+        return $this->pluginExecutor;
+    }
 }
