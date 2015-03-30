@@ -74,7 +74,7 @@ class Docker implements PHPCI\Plugin
             $this->phpci->executeCommand('find %s | fgrep -v ./.git/ | xargs touch -t 200001010000.00', $path);
         }
 
-        $cmd = $dockerLocation . ' build --env GITHUB_OAUTH_TOKEN=%s --rm -t build-%s %s';
+        $cmd = $dockerLocation . ' build --pull --env GITHUB_OAUTH_TOKEN=%s --rm -t build-%s %s';
 
         $this->phpci->log('Running docker build');
 
