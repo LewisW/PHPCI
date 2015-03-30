@@ -64,6 +64,10 @@ class RunCommand extends SignaledCommand
     {
         parent::__construct($name);
         $this->logger = $logger;
+
+        foreach ($this->getStopSignals() as $signal) {
+            $this->addSignalCallback($signal, array($this, 'finish'));
+        }
     }
 
     protected function configure()
@@ -75,10 +79,14 @@ class RunCommand extends SignaledCommand
             ->setDescription(Lang::get('run_all_pending'));
     }
 
-    protected function stop()
+    protected function finish()
     {
-        parent::stop();
+        $this->cleanUp();
+        exit;
+    }
 
+    protected function cleanUp()
+    {
         if ($this->currentBuild) {
             $build = $this->currentBuild;
 
@@ -87,8 +95,6 @@ class RunCommand extends SignaledCommand
             $build->setLog($build->getLog() . PHP_EOL . PHP_EOL . Lang::get('build_cancelled'));
             Factory::getStore('Build')->save($build);
         }
-
-        exit;
     }
 
     /**
