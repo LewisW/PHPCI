@@ -60,7 +60,7 @@
                 $githubUri = 'https://github.com/login/oauth/authorize?client_id='.$id.'&scope=repo&redirect_uri=' . $returnTo;
                 ?>
                 <?php if (!empty($id)): ?>
-                    <?php if (empty($githubUser) || empty($settings['phpci']['github']['token'])): ?>
+                    <?php if (empty($githubUser['name']) || empty($settings['phpci']['github']['token'])): ?>
                         <p class="alert alert-warning clearfix">
                             <?php Lang::out('github_sign_in', $githubUri); ?>
                         </p>
