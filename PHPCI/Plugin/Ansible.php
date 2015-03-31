@@ -26,6 +26,7 @@ class Ansible implements PHPCI\Plugin
     protected $build;
     protected $inventory;
     protected $playbook;
+    protected $privateKey;
 
     /**
      * Set up the plugin, configure options, etc.
@@ -46,6 +47,11 @@ class Ansible implements PHPCI\Plugin
 
         if (array_key_exists('inventory', $options)) {
             $this->inventory = $options['inventory'];
+        }
+
+        // Default to using the project private key
+        if (!array_key_exists('use_private_key', $options) || $options['use_private_key']) {
+            $this->privateKey = $this->build->getProject()->getSshPrivateKey();
         }
 
         if (array_key_exists('playbook', $options)) {
@@ -79,6 +85,27 @@ class Ansible implements PHPCI\Plugin
             $cmd .= ' -i '. $this->inventory;
         }
 
+        if ($this->privateKey) {
+            $cmd .= ' -e "ansible_ssh_private_key_file='. escapeshellarg($this->writeSshKey($this->privateKey)) .'"';
+        }
+
         return $this->phpci->executeCommand($cmd, $this->playbook);
+    }
+
+    /**
+     * Create an SSH key file on disk for this build.
+     * @param string $key
+     * @return string
+     */
+    protected function writeSshKey($key)
+    {
+        $keyFile = tmpfile();
+
+        // Write the contents of this project's git key to the file:
+        file_put_contents($keyFile, $key);
+        chmod($keyFile, 0600);
+
+        // Return the filename:
+        return $keyFile;
     }
 }
