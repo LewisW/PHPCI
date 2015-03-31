@@ -171,7 +171,7 @@ class PhpDocblockChecker implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
                 $message = 'Method ' . $error['class'] . '::' . $error['method'] . ' does not have a Docblock comment.';
             }
 
-            $this->build->reportError($this->phpci, $error['file'], $error['line'], $message);
+            $this->build->reportError($this->phpci, $this->path . DIRECTORY_SEPARATOR . $error['file'], $error['line'], $message);
         }
     }
 }
