@@ -16,13 +16,16 @@ var logPlugin = ActiveBuild.UiPlugin.extend({
     },
 
     onUpdate: function(e) {
+        var $buildLog = $('#build-log');
         if (!e.queryData || e.queryData == '') {
-            $('#build-log').hide();
+            $buildLog.hide();
             return;
         }
 
-        $('#build-log pre').html(e.queryData.log);
-        $('#build-log').show();
+        $('pre', $buildLog).html(e.queryData.log);
+        $buildLog.show();
+
+        $buildLog.scrollTop($buildLog.height());
     }
 });
 
