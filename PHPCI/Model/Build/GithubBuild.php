@@ -218,6 +218,11 @@ class GithubBuild extends RemoteGitBuild
 
         $diff = $builder->getLastOutput();
 
+        // Nothing has changed.
+        if (!$diff) {
+            return null;
+        }
+
         $helper = new Diff();
         $lines = $helper->getLinePositions($diff);
 
