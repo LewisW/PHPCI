@@ -22,10 +22,11 @@ var logPlugin = ActiveBuild.UiPlugin.extend({
             return;
         }
 
-        $('pre', $buildLog).html(e.queryData.log);
-        $buildLog.show();
+        var $pre = $('pre', $buildLog);
 
-        $buildLog.scrollTop($buildLog.height());
+        $pre.html(e.queryData.log);
+        $buildLog.show();
+        $pre.scrollTop($pre.prop('scrollHeight'));
     }
 });
 
