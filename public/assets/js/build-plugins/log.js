@@ -24,9 +24,12 @@ var logPlugin = ActiveBuild.UiPlugin.extend({
 
         var $pre = $('pre', $buildLog);
 
+        if ($pre.innerHTML != e.queryData.log) {
+            $pre.scrollTop($pre.prop('scrollHeight'));
+        }
+
         $pre.html(e.queryData.log);
         $buildLog.show();
-        $pre.scrollTop($pre.prop('scrollHeight'));
     }
 });
 
