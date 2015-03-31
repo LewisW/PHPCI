@@ -226,7 +226,8 @@ class GithubBuild extends RemoteGitBuild
             var_dump($lines);
             var_dump($line);
             var_dump($file);
-            echo "-----\n". $diff;
+            var_dump($diff);
+            echo "-----\n";
         }
         return $lines[$line];
     }
