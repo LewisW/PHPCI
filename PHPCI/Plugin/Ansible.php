@@ -89,6 +89,8 @@ class Ansible implements PHPCI\Plugin
             $cmd .= ' -e "ansible_ssh_private_key_file='. escapeshellarg($this->writeSshKey($this->privateKey)) .'"';
         }
 
+        $this->phpci->log(sprintf($cmd, $this->playbook));
+
         return $this->phpci->executeCommand($cmd, $this->playbook);
     }
 
