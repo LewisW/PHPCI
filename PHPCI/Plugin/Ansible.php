@@ -99,7 +99,7 @@ class Ansible implements PHPCI\Plugin
      */
     protected function writeSshKey($key)
     {
-        $keyFile = tmpfile();
+        $keyFile = tempnam(sys_get_temp_dir(), 'phpci-'. $this->build->getId());
 
         // Write the contents of this project's git key to the file:
         file_put_contents($keyFile, $key);
