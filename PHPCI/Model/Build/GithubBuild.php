@@ -157,6 +157,7 @@ class GithubBuild extends RemoteGitBuild
                 $remoteBranch = $this->getExtra('remote_branch');
 
                 $cmd = 'cd "%s" && git checkout -b phpci/' . $this->getId() . ' %s && git pull -q --no-edit %s %s';
+                $builder->log(sprintf($cmd, $cloneTo, $this->getBranch(), $remoteUrl, $remoteBranch));
                 $success = $builder->executeCommand($cmd, $cloneTo, $this->getBranch(), $remoteUrl, $remoteBranch);
             }
         } catch (\Exception $ex) {
