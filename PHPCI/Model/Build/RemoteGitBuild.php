@@ -96,7 +96,8 @@ class RemoteGitBuild extends Build
         $cmd .= ' -b %s %s "%s"';
 
         if (!IS_WIN) {
-            $cmd = 'export GIT_SSH="'.$gitSshWrapper.'" && ' . $cmd;
+            putenv('GIT_SSH = "'.$gitSshWrapper.'"');
+            //$cmd = 'export GIT_SSH="'.$gitSshWrapper.'" && ' . $cmd;
         }
 
         $success = $builder->executeCommand($cmd, $this->getBranch(), $this->getCloneUrl(), $cloneTo);
