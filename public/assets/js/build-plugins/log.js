@@ -24,6 +24,9 @@ var logPlugin = ActiveBuild.UiPlugin.extend({
 
         var $pre = $('pre', $buildLog);
 
+        console.log($pre.prop('scrollHeight'));
+        console.log($pre.scrollTop());
+        console.log($pre.outerHeight());
         if ($pre.prop('scrollHeight') - $pre.scrollTop() == $pre.outerHeight()) {
             console.log('At bottom');
 
