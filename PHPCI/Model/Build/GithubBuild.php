@@ -147,6 +147,12 @@ class GithubBuild extends RemoteGitBuild
      */
     protected function postCloneSetup(Builder $builder, $cloneTo)
     {
+        $keyFile = $this->writeSshKey($cloneTo);
+
+        if (!IS_WIN) {
+            $gitSshWrapper = $this->writeSshWrapper($cloneTo, $keyFile);
+        }
+
         $buildType = $this->getExtra('build_type');
 
         $success = true;
@@ -157,6 +163,11 @@ class GithubBuild extends RemoteGitBuild
                 $remoteBranch = $this->getExtra('remote_branch');
 
                 $cmd = 'cd "%s" && git checkout -b phpci/' . $this->getId() . ' %s && git pull -q --no-edit %s %s';
+
+                if (!IS_WIN) {
+                    $cmd = 'export GIT_SSH="'.$gitSshWrapper.'" && ' . $cmd;
+                }
+
                 $builder->log(sprintf($cmd, $cloneTo, $this->getBranch(), $remoteUrl, $remoteBranch));
                 $success = $builder->executeCommand($cmd, $cloneTo, $this->getBranch(), $remoteUrl, $remoteBranch);
             }

@@ -96,8 +96,7 @@ class RemoteGitBuild extends Build
         $cmd .= ' -b %s %s "%s"';
 
         if (!IS_WIN) {
-            putenv('GIT_SSH = "'.$gitSshWrapper.'"');
-            //$cmd = 'export GIT_SSH="'.$gitSshWrapper.'" && ' . $cmd;
+            $cmd = 'export GIT_SSH="'.$gitSshWrapper.'" && ' . $cmd;
         }
 
         $success = $builder->executeCommand($cmd, $this->getBranch(), $this->getCloneUrl(), $cloneTo);
@@ -109,9 +108,9 @@ class RemoteGitBuild extends Build
         }
 
         // Remove the key file and git wrapper:
-        //unlink($keyFile);
+        unlink($keyFile);
         if (!IS_WIN) {
-        //    unlink($gitSshWrapper);
+            unlink($gitSshWrapper);
         }
 
         return $success;
@@ -153,6 +152,10 @@ class RemoteGitBuild extends Build
         $keyPath = dirname($cloneTo . '/temp');
         $keyFile = $keyPath . '.key';
 
+        if (file_exists($keyFile)) {
+            return $keyFile;
+        }
+
         // Write the contents of this project's git key to the file:
         file_put_contents($keyFile, $this->getProject()->getSshPrivateKey());
         chmod($keyFile, 0600);
@@ -171,6 +174,10 @@ class RemoteGitBuild extends Build
     {
         $path = dirname($cloneTo . '/temp');
         $wrapperFile = $path . '.sh';
+
+        if (file_exists($wrapperFile)) {
+            return $wrapperFile;
+        }
 
         $sshFlags = '-o CheckHostIP=no -o IdentitiesOnly=yes -o StrictHostKeyChecking=no -o PasswordAuthentication=no';
 
