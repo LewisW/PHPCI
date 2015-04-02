@@ -64,6 +64,7 @@ class RemoteGitBuild extends Build
 
         $cmd .= ' -b %s %s "%s"';
         $success = $builder->executeCommand($cmd, $this->getBranch(), $this->getCloneUrl(), $cloneTo);
+        var_dump(sprintf($cmd, $this->getBranch(), $this->getCloneUrl(), $cloneTo));
 
         if ($success) {
             $success = $this->postCloneSetup($builder, $cloneTo);
