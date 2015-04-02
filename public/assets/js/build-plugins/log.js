@@ -16,7 +16,7 @@ var logPlugin = ActiveBuild.UiPlugin.extend({
     },
 
     onUpdate: function(e) {
-        var $buildLog = $('#build-log');
+        var $buildLog = $('#build-log'), scroll = false;
         if (!e.queryData || e.queryData == '') {
             $buildLog.hide();
             return;
@@ -24,11 +24,21 @@ var logPlugin = ActiveBuild.UiPlugin.extend({
 
         var $pre = $('pre', $buildLog);
 
-        if ($pre.innerHTML != e.queryData.log) {
-            $pre.scrollTop($pre.prop('scrollHeight'));
+        if ($pre.prop('scrollHeight') - elem.scrollTop() == elem.outerHeight()) {
+            console.log('At bottom');
+
+            scroll = true;
+        }
+        else {
+            console.log('Not at bottom');
         }
 
         $pre.html(e.queryData.log);
+
+        if (scroll) {
+            $pre.scrollTop($pre.prop('scrollHeight'));
+        }
+
         $buildLog.show();
     }
 });
