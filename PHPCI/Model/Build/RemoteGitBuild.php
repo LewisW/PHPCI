@@ -108,7 +108,7 @@ class RemoteGitBuild extends Build
         }
 
         // Remove the key file and git wrapper:
-        unlink($keyFile);
+        //unlink($keyFile);
         if (!IS_WIN) {
         //    unlink($gitSshWrapper);
         }
