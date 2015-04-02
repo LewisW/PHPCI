@@ -78,6 +78,6 @@ class Docker implements PHPCI\Plugin
 
         $this->phpci->log(sprintf($cmd, $commit, $path));
 
-        return $this->phpci->executeCommand($cmd, $commit, $path);
+        return $this->phpci->executeCommand(sprintf('script -q -c "%s" /dev/null', $cmd), $commit, $path);
     }
 }
